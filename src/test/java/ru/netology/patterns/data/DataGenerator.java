@@ -25,15 +25,18 @@ public class DataGenerator {
     }
 
     public static String generateName(String locale) {
-        Faker faker = new Faker(new Locale(locale));
-        String name = faker.name().fullName();
-        return name;
+        var faker = new Faker(new Locale(locale));
+        return faker.name().lastName() + " " + faker.name().firstName();
     }
 
     public static String generatePhone(String locale) {
-        Faker faker = new Faker(new Locale(locale));
-        String phone = String.valueOf(faker.phoneNumber());
-        return phone;
+        var faker = new Faker(new Locale(locale));
+        return faker.phoneNumber().phoneNumber();
+    }
+
+    public static String generateWrongPhone(String locale) {
+        var faker = new Faker(new Locale(locale));
+        return faker.numerify("####");
     }
 
     public static class Registration {
@@ -41,13 +44,7 @@ public class DataGenerator {
         }
 
         public static UserInfo generateUser(String locale) {
-            UserInfo user;
-            user = new UserInfo(
-                    generateCity(),
-                    generateName(locale),
-                    generatePhone(locale)
-            );
-            return user;
+            return new UserInfo(generateCity(), generateName(locale), generatePhone(locale));
         }
     }
 
